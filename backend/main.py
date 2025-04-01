@@ -9,6 +9,7 @@ import requests
 # .env 파일 로드
 load_dotenv()
 API_KEY = os.getenv("UPSTAGE_API_KEY")
+print(f"[DEBUG] API_KEY: {API_KEY}")
 
 # FastAPI 인스턴스 생성 (괄호 반드시!)
 app = FastAPI()
