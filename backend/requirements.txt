@@ -4,4 +4,7 @@ python-dotenv
 requests
 upstage
 python-multipart
-sqlalchemy
+sqlalchemy>=1.4.0
+alembic
+pydantic
+aiosqlite

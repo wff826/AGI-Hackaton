@@ -3,6 +3,8 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from upstage import call_upstage_api 
 
+from domain.user.user_router import router as user_router
+
 app = FastAPI()
 
 app.add_middleware(
@@ -21,3 +23,5 @@ async def upload(file: UploadFile = File(...)):
 
     result = call_upstage_api(file_path)
     return {"text": result}
+
+app.include_router(user_router, prefix="/api")
