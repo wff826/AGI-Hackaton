@@ -25,7 +25,7 @@ app.add_middleware(
 
 # PDF 파일을 Upstage Document Parse API로 보내기
 def call_upstage_api(file_path: str):
-    url = "https://api.upstage.ai/v1/document-ai/document-parse"
+    url = "https://python.langchain.com/docs/integrations/providers/upstage/#document-parse"
     headers = {"Authorization": f"Bearer {API_KEY}"}
     files = {"document": open(file_path, "rb")}
     data = {
