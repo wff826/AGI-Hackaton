@@ -2,3 +2,6 @@ fastapi
 uvicorn
 python-dotenv
 requests
+upstage
+python-multipart
+sqlalchemy
