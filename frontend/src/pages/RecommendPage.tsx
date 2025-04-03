@@ -45,11 +45,12 @@ const RecommendPage = () => {
         backgroundColor: "#fff",
         padding: "2rem",
         position: "relative",
+        boxSizing: "border-box"
       }}
     >
       <h2 style={{ fontSize: "2rem", marginBottom: "1rem" }}>🎯 장학금 추천 결과</h2>
 
-      <div style={{ width: "100%", maxWidth: "700px" }}>
+      <div style={{ width: "100%", maxWidth: "700px", textAlign: "center" }}>
         <input
           type="text"
           value={userInput}
@@ -60,19 +61,20 @@ const RecommendPage = () => {
             padding: "0.8rem",
             fontSize: "1rem",
             marginBottom: "1rem",
+            boxSizing: "border-box"
           }}
         />
         <button
           onClick={handleSubmit}
           disabled={loading}
-          style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}
+          style={{ padding: "0.5rem 1.5rem", fontSize: "1rem", cursor: "pointer", borderRadius: "8px", border: "none", backgroundColor: "#f3f3f3" }}
         >
           {loading ? "추천 중..." : "장학금 추천받기"}
         </button>
 
         {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
 
-        <div style={{ marginTop: "2rem" }}>
+        <div style={{ marginTop: "2rem", textAlign: "left" }}>
           {programs.map((p, i) => (
             <div key={i} style={{ marginBottom: "1.5rem" }}>
               <h3>📌 {p.title}</h3>
@@ -97,7 +99,7 @@ const RecommendPage = () => {
           color: "#aaa",
         }}
       >
-        ⓒ 2025 JARVIS Corp.
+        ⒲ 2025 JARVIS Corp.
       </p>
     </div>
   );
