@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from upstage import call_upstage_api
 from upstage_info import call_info_extract
 from domain.user.user_router import router as user_router
+from recommend import router as recommend_router  # ✅ RAG 추천 API 추가
 
 app = FastAPI()
 
@@ -42,7 +43,6 @@ async def upload_student(
     with open("grade_temp.pdf", "wb") as f:
         f.write(await grade.read())
 
-    # 문서 파싱
     enrollment_text = call_upstage_api("enrollment_temp.pdf")
     grade_text = call_upstage_api("grade_temp.pdf")
 
@@ -78,5 +78,6 @@ async def upload_general(
         "extracted_info": extracted_info
     }
 
-# 라우터 등록
+# ✅ 라우터 등록
 app.include_router(user_router, prefix="/api")
+app.include_router(recommend_router)  # RAG 추천 API 라우터 연결
