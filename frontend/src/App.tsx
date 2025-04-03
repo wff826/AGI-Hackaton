@@ -1,12 +1,17 @@
-import Upload from "./components/Upload";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import UploadStudent from "./pages/UploadStudent";
+import UploadGeneral from "./pages/UploadGeneral";
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>AI 지원금 문서 분석기</h1>
-      <Upload />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/upload-student" element={<UploadStudent />} />
+        <Route path="/upload-general" element={<UploadGeneral />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
