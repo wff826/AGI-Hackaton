@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from domain.student.student_router import router as student_router
-from recommend import router as recommend_router  # ✅ RAG 추천 API 추가
+from recommend import router as recommend_router
 from domain.scholarship.scholarship_router import router as scholarship_router
 from session import create_session, get_session
 
