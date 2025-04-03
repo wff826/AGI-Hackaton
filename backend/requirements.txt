@@ -13,3 +13,4 @@ sentence-transformers
 sqlalchemy>=1.4.0
 uuid
 uvicorn
+pandas

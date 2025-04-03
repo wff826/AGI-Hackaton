@@ -47,6 +47,6 @@ async def upload_scholarship(
         "grade": student.grade
     }
     return {
-        "message": "Scholarship information uploaded and saved successfully.",
+        "message": "Student information uploaded and saved successfully.",
         "student": user_session["data"]["student_info"]
     }
