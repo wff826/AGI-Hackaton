@@ -11,3 +11,4 @@ aiosqlite
 langchain_upstage
 langchain
 openai
+uuid
