@@ -45,7 +45,7 @@ const ConfirmStudent = () => {
           color: "#aaa",
         }}
       >
-        ⒲ 2025 JARVIS Corp.
+        ⓒ 2025 JARVIS Corp.
       </p>
     </div>
   );
