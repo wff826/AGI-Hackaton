@@ -3,9 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # ✅ 라우터 임포트
 from domain.student.student_router import router as student_router
-from recommend_router import router as recommend_router
 from domain.scholarship.scholarship_router import router as scholarship_router
 from session import create_session, get_session
+from llm_router import router as llm_router
 
 app = FastAPI()
 
@@ -32,4 +32,4 @@ async def session_endpoint():
 # ✅ 라우터 등록
 app.include_router(student_router, prefix="/upload")
 app.include_router(scholarship_router, prefix="/upload")
-app.include_router(recommend_router)
+app.include_router(llm_router)

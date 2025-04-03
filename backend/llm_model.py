@@ -115,21 +115,5 @@ def recommend_by_rag(user_input: str):
     except:
         return []
 
-# ✅ 최종 FastAPI 라우터
-@router.post("/recommend")
-async def recommend(input: RecommendInput):
-    try:
-        # Step 1: LLM 추천 + 링크 부여
-        initial_programs = generate_program_titles(input.user_input)
-        enriched_programs = enrich_with_links(initial_programs)
 
-        # Step 2: RAG 추천
-        rag_programs = recommend_by_rag(input.user_input)
 
-        # Merge and return
-        return {
-            "programs": rag_programs + enriched_programs
-        }
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
