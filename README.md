@@ -1,14 +1,13 @@
-# 🎓 AI 지원금 분석 서비스
+# 🎓 AI Support Fund Analysis Service
 
-주민등록등본, 소득증명서, 재학증명서, 성적증명서를 업로드하면  
-AI가 지원금 수혜 가능성을 분석하고 관련 제도를 추천해주는 서비스입니다.
+Upload documents such as resident registration, income certificates, enrollment certificates, and transcripts, and let the AI analyze your eligibility for support funds and recommend relevant programs.
 
-## 🏗 프로젝트 개요
+## 🏗 Project Overview
 
-- **프로젝트명**: AGI-Hackaton
-- **목적**: 문서 업로드 → Upstage API로 정보 추출 → AI 추천 시스템으로 최적의 정부지원금∙장학금 제도 제안
+- **Project Name**: AGI-Hackaton
+- **Objective**: Upload documents → Extract information using Upstage API → Recommend optimal government support or scholarship programs using an AI recommendation system.
 
-## 🧩 프로젝트 구조
+## 🧩 Project Structure
 
 ```
 AGI-Hackaton
@@ -25,29 +24,29 @@ AGI-Hackaton
 │   └── ...
 ```
 
-## ⚙ 주요 기능
+## ⚙ Key Features
 
-### 📑 문서 업로드 및 분석
-- 주민등록등본, 소득증명서 → 사용자 일반 정보 추출 (이름, 나이, 소득 등) (구현 예정)
-- 재학증명서, 성적증명서 → 학생 학적∙성적 정보 추출
+### 📑 Document Upload and Analysis
+- **Resident Registration, Income Certificates** → Extract general user information (name, age, income, etc.) (Planned)
+- **Enrollment Certificates, Transcripts** → Extract academic and grade information.
 
 ### 🤖 Upstage API
-- **Document Parsing**: PDF 텍스트 추출
-- **InfoExtract**: 문서에서 기준이 되는 정보(소득, 전공, 성적 등) 구조화
-- `langchain_upstage` + `solar-pro` 모델을 사용하여 한국어 문서 처리를 고도화
+- **Document Parsing**: Extract text from PDFs.
+- **InfoExtract**: Structure key information (income, major, grades, etc.) from documents.
+- Powered by `langchain_upstage` + `solar-pro` models for advanced Korean document processing.
 
-### 🌐 AI 기반 제도 추천
-- 학습된 AI 모델(`langchain_upstage`, `HuggingFaceEmbeddings`, etc.)로 사용자 정보와 문서 정보를 종합 분석
-- 개인별/맞춤형 제도(장학금, 정부지원금) 추천
+### 🌐 AI-Based Program Recommendation
+- Analyze user information and document data using trained AI models (`langchain_upstage`, `HuggingFaceEmbeddings`, etc.).
+- Provide personalized recommendations for programs (scholarships, government support funds).
 
-## 🔑 기술 스택
+## 🔑 Tech Stack
 
-- **Backend**: FastAPI, SQLAlchemy, SQLite (비동기 엔진)
+- **Backend**: FastAPI, SQLAlchemy, SQLite (async engine)
 - **AI Model**: LangChain, HuggingFace, Upstage
 - **Frontend**: React (TypeScript)
 - **Infra / DevOps**: uvicorn, pip, GitHub
 
-## 🚀 실행 방법
+## 🚀 How to Run
 
 ```bash
 cd backend
@@ -57,26 +56,26 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## 📦 사용 예시
+## 📦 Usage Examples
 
-1. **학생 사용자**  
-   - `/upload/student` 라우터를 통해 재학증명서, 성적증명서 업로드 → DB 저장  
-   - `/recommend/recommend-programs` 라우터로 AI 추천 결과 받기  
+1. **Student User**  
+   - Upload enrollment and transcript documents via the `/upload/student` endpoint → Save to DB.  
+   - Get AI recommendations via the `/recommend/recommend-programs` endpoint.
 
-2. **추가 입력 기반 결과**  
-   - `/recommend/final-result` 라우터를 통해 세션 정보, 추천 프로그램, 추가 질의 모두 종합해 최종 답변 수령  
+2. **Final Results with Additional Input**  
+   - Use the `/recommend/final-result` endpoint to combine session data, recommended programs, and additional user input for a final response.
 
-## 🧭 API 엔드포인트
+## 🧭 API Endpoints
 
-- `POST /create-session` : UUID 기반 세션 생성
-- `POST /upload/scholarship` : 장학금 서류 업로드 → DB 저장
-- `GET /recommend/recommend-programs` : 사용자 정보 기반 장학금/지원금 추천
-- `POST /recommend/final-result` : 추가 질문/정보 입력 후 최종 결과 반환
+- `POST /create-session`: Generate a session using a UUID.
+- `POST /upload/scholarship`: Upload scholarship documents → Save to DB.
+- `GET /recommend/recommend-programs`: Recommend scholarships/support programs based on user information.
+- `POST /recommend/final-result`: Provide final recommendations based on additional user input.
 
-## 📸 예시 화면
-![화면 예시](./initial_page.png)
+## 📸 Example Screen
+![Example Screen](./initial_page.png)
 
-## 🤝 기여 방법
-1. 포크(Fork) → 새로운 브랜치 생성 → 기능 구현  
-2. PR(Pull Request)을 통해 변경 사항 제안  
-3. 코드 리뷰 후 머지(Merge)
+## 🤝 Contribution Guidelines
+1. Fork the repository → Create a new branch → Implement features.  
+2. Submit a Pull Request (PR) to propose changes.  
+3. Review the code and merge after approval.
