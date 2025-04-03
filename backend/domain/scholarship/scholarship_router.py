@@ -7,6 +7,7 @@ from upstage import call_upstage_api
 
 # DB 세션 주입을 위한 의존성 함수를 직접 구현하거나, 프로젝트 구조에 맞게 수정
 from database import get_db
+from session import get_session
 
 # CRUD 함수와 스키마 import
 from .scholarship_crud import create_scholarship
@@ -16,7 +17,8 @@ router = APIRouter()
 @router.post("/scholarship")
 async def upload_scholarship(
     scholarship_file: UploadFile = File(...),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    user_session: dict = Depends(get_session)
 ):
 
     # 1) PDF 파일을 임시로 저장
@@ -34,11 +36,12 @@ async def upload_scholarship(
     # 4) DB에 저장
     scholarship = await create_scholarship(db, scholarship_name, scholarship_raw)
 
+    user_session["data"]["scholarship_info"] = {
+        "id": scholarship.id,
+        "name": scholarship.name,
+        "raw_text": scholarship.raw_text
+    }
     return {
         "message": "Scholarship information uploaded and saved successfully.",
-        "student": {
-            "id": scholarship.id,
-            "name": scholarship.name,
-            "raw_text": scholarship.raw_text
-        }
+        "scholarship": user_session["data"]["scholarship_info"]
     }
