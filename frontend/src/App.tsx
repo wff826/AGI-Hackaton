@@ -1,11 +1,12 @@
-// App.tsx
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StartPage from "./pages/StartPage";
 import UploadStudent from "./pages/UploadStudent";
 import ConfirmStudent from "./pages/ConfirmStudent";
 import RecommendPage from "./pages/RecommendPage";
+import ChatbotPage from "./pages/ChatbotPage";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -13,9 +14,10 @@ function App() {
         <Route path="/upload" element={<UploadStudent />} />
         <Route path="/confirm" element={<ConfirmStudent />} />
         <Route path="/recommend" element={<RecommendPage />} />
+        <Route path="/chatbot" element={<ChatbotPage />} /> 
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
