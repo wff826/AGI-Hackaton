@@ -150,7 +150,7 @@ from langchain.embeddings import HuggingFaceEmbeddings  # or Upstage, HuggingFac
 from langchain.schema import Document
 import pandas as pd
 
-csv_path = "D:\\code\\2025-1\\AGI_Hackathon2\\AGI-Hackaton\\backend\\scholarships.csv"
+csv_path = "C:\\Users\\miche\\Desktop\\AGI\\AGI-Hackaton\\backend\\scholarships.csv"
 df = pd.read_csv(csv_path)
 
 df_clean = df.dropna(subset=["name", "raw_text"])
