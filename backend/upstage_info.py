@@ -20,26 +20,52 @@ def call_info_extract(file_path: str):
     
     base64_data = encode_file_to_base64(file_path)
     
-    extraction_schema = {
-        "type": "json_schema",
-        "json_schema": {
-            "name": "student_info_extraction",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "Grade": {
-                        "type": "string",
-                        "description": "학생의 학점"
+    if(file_path == "enrollment_temp.pdf"):
+        extraction_schema = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "student_info_extraction",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "학생의 이름"
+                        },
+                        "studentid": {
+                            "type": "string",
+                            "description": "학생의 학번"
+                        },
+                        "major": {
+                            "type": "string",
+                            "description": "학생의 전공"
+                        },
+                        "year": {
+                            "type": "string",
+                            "description": "학생의 입학년도"
+                        }
                     },
-                    "studentid": {
-                        "type": "string",
-                        "description": "학생의 학번"
-                    }
-                },
-                "required": ["Grade", "studentid"]
+                    "required": ["name", "studentid", "major", "year"]
+                }
             }
         }
-    }
+    else:
+        extraction_schema = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "student_info_extraction",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "grade": {
+                            "type": "string",
+                            "description": "학생의 학점"
+                        }
+                    },
+                    "required": ["grade"]
+                }
+            }
+        }
 
     # print("[DEBUG] InfoExtract Payload:", json.dumps(payload, ensure_ascii=False, indent=2))  # 디버깅 로그
     try:

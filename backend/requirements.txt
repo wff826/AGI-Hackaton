@@ -8,3 +8,6 @@ sqlalchemy>=1.4.0
 alembic
 pydantic
 aiosqlite
+langchain_upstage
+langchain
+openai

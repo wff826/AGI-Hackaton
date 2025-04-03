@@ -11,3 +11,13 @@ class User(Base):
     income = Column(Integer, nullable=True, index=True)
     job = Column(String(50), index=True)
     enterprise_size = Column(String(50), nullable=True, index=True)
+    
+class Student(Base):
+    __tablename__ = "students"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=True, index=True)
+    studentid = Column(String(50), nullable=True, index=True)
+    major = Column(String(50), nullable=True, index=True)
+    year = Column(String(50), nullable=True, index=True)
+    grade = Column(String(50), nullable=True, index=True)
