@@ -125,7 +125,7 @@ def create_schema(file_path: str):
                     "properties": {
                         "program_name": {
                             "type": "string",
-                            "description": "장학금의 이름을 뽑아주세요...."
+                            "description": "장학금의 제목을 뽑아주세요...."
                         }
                     },
                     "required": ["program_name"]
