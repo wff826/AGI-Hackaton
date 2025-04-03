@@ -43,16 +43,16 @@ async def upload_student(
     with open("grade_temp.pdf", "wb") as f:
         f.write(await grade.read())
 
-    enrollment_text = call_upstage_api("enrollment_temp.pdf")
-    grade_text = call_upstage_api("grade_temp.pdf")
+    # enrollment_text = call_upstage_api("enrollment_temp.pdf")
+    # grade_text = call_upstage_api("grade_temp.pdf")
 
-    combined_text = enrollment_text + "\n" + grade_text
-    instruction = "이름, 학번, 학과, 학년, 성적을 JSON 형식으로 추출해주세요."
-    extracted_info = call_info_extract(combined_text, instruction)
-
+    # combined_text = enrollment_text + "\n" + grade_text
+    # instruction = "이름, 학번, 학과, 학년, 성적을 JSON 형식으로 추출해주세요."
+    enrollment_info = call_info_extract("enrollment_temp.pdf")
+    grade_info = call_info_extract("grade_temp.pdf")
     return {
-        "raw_text": combined_text,
-        "extracted_info": extracted_info
+        "enrollment_info": enrollment_info,
+        "grade_info": grade_info
     }
 
 # ✅ 3. 일반 문서 API

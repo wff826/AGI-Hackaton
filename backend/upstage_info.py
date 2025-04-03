@@ -1,46 +1,83 @@
 import os
 import json
-import requests
+from openai import OpenAI
 from dotenv import load_dotenv
+import base64
 
 load_dotenv()
 API_KEY = os.getenv("UPSTAGE_API_KEY")
 
-def call_info_extract(text: str, instruction: str):
-    url = "https://api.upstage.ai/v1/information-extraction"
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
+def encode_file_to_base64(file_path: str) -> str:
+    with open(file_path, "rb") as f:
+        file_bytes = f.read()
+        return base64.b64encode(file_bytes).decode('utf-8')
 
-    payload = {
-        "messages": [
-            {
-                "type": "text",
-                "role": "user",
-                "content": f"{text}\n\n{instruction}"
+def call_info_extract(file_path: str):
+    extraction_client = OpenAI(
+        api_key=API_KEY,
+        base_url="https://api.upstage.ai/v1/information-extraction"
+    )
+    
+    base64_data = encode_file_to_base64(file_path)
+    
+    extraction_schema = {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "student_info_extraction",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Grade": {
+                        "type": "string",
+                        "description": "학생의 학점"
+                    },
+                    "studentid": {
+                        "type": "string",
+                        "description": "학생의 학번"
+                    }
+                },
+                "required": ["Grade", "studentid"]
             }
-        ],
-        "output_format": "json",
-        "response_format": {
-            "format": "json"
         }
     }
 
-    print("[DEBUG] InfoExtract Payload:", json.dumps(payload, ensure_ascii=False, indent=2))  # 디버깅 로그
-
-    response = requests.post(url, headers=headers, json=payload)
-
-    if response.status_code != 200:
+    # print("[DEBUG] InfoExtract Payload:", json.dumps(payload, ensure_ascii=False, indent=2))  # 디버깅 로그
+    try:
+        response = extraction_client.chat.completions.create(
+            model="information-extract",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:application/pdf;base64,{base64_data}"
+                            }
+                        }
+                    ]
+                }
+            ],
+            response_format=extraction_schema
+        )
+    except Exception as e:
         return {
-            "error": f"[INFO EXTRACT ERROR] {response.status_code}",
-            "detail": response.text
+            "error": str(e)
         }
-
-    result = response.json().get("result")
-    if isinstance(result, str):
-        try:
-            return json.loads(result)
-        except:
-            return {"error": "파싱 실패", "raw": result}
-    return result
+    
+    try:
+        result = response.choices[0].message.content
+    except (IndexError, AttributeError) as e:
+        return {
+            "error": str(e)
+        }
+    
+    try:
+        result_json = json.loads(result)
+    except json.JSONDecodeError as e:
+        return {
+            "error": str(e),
+            "raw_content": result
+        }
+    
+    return result_json
