@@ -14,10 +14,9 @@ def call_info_extract(text: str, instruction: str):
     }
 
     payload = {
-        "model": "information-extract",
         "messages": [
             {
-                "type": "text", 
+                "type": "text",
                 "role": "user",
                 "content": f"{text}\n\n{instruction}"
             }
@@ -28,7 +27,7 @@ def call_info_extract(text: str, instruction: str):
         }
     }
 
-    print("[DEBUG] InfoExtract Payload:", json.dumps(payload, ensure_ascii=False, indent=2))  # 디버깅
+    print("[DEBUG] InfoExtract Payload:", json.dumps(payload, ensure_ascii=False, indent=2))  # 디버깅 로그
 
     response = requests.post(url, headers=headers, json=payload)
 

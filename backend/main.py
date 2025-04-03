@@ -6,26 +6,23 @@ from domain.user.user_router import router as user_router
 
 app = FastAPI()
 
-# CORS 설정 (프론트 연결 허용)
+# CORS 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 개발 중이니 전체 허용
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ 1. 주민등록등본 업로드 API (기존)
+# ✅ 1. 주민등록등본 API
 @app.post("/upload/resident")
 async def upload_resident(file: UploadFile = File(...)):
-    file_path = "temp.pdf"
+    file_path = "temp_resident.pdf"
     with open(file_path, "wb") as f:
         f.write(await file.read())
 
-    # 1. 문서에서 텍스트 추출
     raw_text = call_upstage_api(file_path)
-
-    # 2. InfoExtract로 구조화 정보 추출
     instruction = "이름, 생년, 주소를 JSON 형식으로 추출해주세요."
     extracted_info = call_info_extract(raw_text, instruction)
 
@@ -34,23 +31,52 @@ async def upload_resident(file: UploadFile = File(...)):
         "extracted_info": extracted_info
     }
 
-# ✅ 2. 학생용 문서 업로드 API (추가)
+# ✅ 2. 학생 문서 API
 @app.post("/upload/student")
 async def upload_student(
     enrollment: UploadFile = File(...),
     grade: UploadFile = File(...)
 ):
-    # 파일 저장
-    with open("enrollment.pdf", "wb") as f:
+    with open("enrollment_temp.pdf", "wb") as f:
         f.write(await enrollment.read())
-    with open("grade.pdf", "wb") as f:
+    with open("grade_temp.pdf", "wb") as f:
         f.write(await grade.read())
 
-    # TODO: 여기에 Upstage API 호출 및 정보 추출 붙이면 됨
+    # 문서 파싱
+    enrollment_text = call_upstage_api("enrollment_temp.pdf")
+    grade_text = call_upstage_api("grade_temp.pdf")
+
+    combined_text = enrollment_text + "\n" + grade_text
+    instruction = "이름, 학번, 학과, 학년, 성적을 JSON 형식으로 추출해주세요."
+    extracted_info = call_info_extract(combined_text, instruction)
+
     return {
-        "message": "Student documents uploaded successfully!",
-        "files": [enrollment.filename, grade.filename]
+        "raw_text": combined_text,
+        "extracted_info": extracted_info
     }
 
-# ✅ 라우터 등록
+# ✅ 3. 일반 문서 API
+@app.post("/upload/general")
+async def upload_general(
+    resident: UploadFile = File(...),
+    income: UploadFile = File(...)
+):
+    with open("resident_temp.pdf", "wb") as f:
+        f.write(await resident.read())
+    with open("income_temp.pdf", "wb") as f:
+        f.write(await income.read())
+
+    resident_text = call_upstage_api("resident_temp.pdf")
+    income_text = call_upstage_api("income_temp.pdf")
+
+    combined_text = resident_text + "\n" + income_text
+    instruction = "이름, 생년, 주소, 소득금액을 JSON 형식으로 추출해주세요."
+    extracted_info = call_info_extract(combined_text, instruction)
+
+    return {
+        "raw_text": combined_text,
+        "extracted_info": extracted_info
+    }
+
+# 라우터 등록
 app.include_router(user_router, prefix="/api")
