@@ -1,11 +1,10 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from upstage import call_upstage_api
-from upstage_info import call_info_extract
 from domain.user.user_router import router as user_router
 from recommend import router as recommend_router  # ✅ RAG 추천 API 추가
 from domain.student.student_router import router as student_router
 from domain.scholarship.scholarship_router import router as scholarship_router
+from session import create_session, get_session
 
 app = FastAPI()
 
@@ -17,6 +16,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/create-session")
+async def session_endpoint():
+    session_id = create_session()
+    return {"session_token": session_id}
 
 
 # ✅ 라우터 등록
