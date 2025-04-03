@@ -1,20 +1,3 @@
-# backend/main.py
-
-from fastapi import FastAPI, UploadFile, File
-from fastapi.middleware.cors import CORSMiddleware
-from upstage import call_upstage_api
-from upstage_info import call_info_extract
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 @app.post("/upload/resident")
 async def upload_resident(file: UploadFile = File(...)):
     file_path = "temp.pdf"

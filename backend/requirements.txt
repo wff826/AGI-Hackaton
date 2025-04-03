@@ -2,3 +2,9 @@ fastapi
 uvicorn
 python-dotenv
 requests
+upstage
+python-multipart
+sqlalchemy>=1.4.0
+alembic
+pydantic
+aiosqlite
