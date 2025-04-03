@@ -206,26 +206,23 @@ def recommend_by_rag(user_input: str):
 
 def initial_input(base_input: str):
     rag_result = recommend_by_rag(base_input)
+    program_result = generate_program_titles(base_input)
+    enriched_programs = enrich_with_links(program_result)
     rag_result = json.loads(rag_result)
-    output = rag_result["programs"]
+    output = rag_result["programs"] + enriched_programs
     return output
     
+def chatbot(base_input: str):
+    prompt = f"""
+    다음은 입력된된 내용입니다:
+
+    사용자의 입력: "{base_input}"
+
+    이 내용을 바탕으로 사용자에게 적합한 장학금 조언을 제공해주세요
+    """
+    result = llm.invoke(prompt)
+    return result.content
     
-# base_input = '사용자정보'
-# st.session_state.chat_history.append(("ai", json.loads(recommend_by_rag(base_input))["programs"]))
-# for role, msg in st.session_state.chat_history:
-#     with st.chat_message("🧑" if role == "user" else "🤖"):
-#         if role == "ai":
-#             for p in msg:
-#                 link = p.get('link', '')
-#                 st.markdown(f"### 📌 {p['title']}")
-#                 st.markdown(p['description'])
-#                 if isinstance(link, str) and link.startswith("http"):
-#                     st.markdown(f"🔗 [공식 링크]({link})")
-#                 else:
-#                     st.markdown("⚠️ 유효한 링크를 찾지 못했습니다.")
-#         else:
-#             st.markdown(msg)
 
 
 # # ✅ 사용자 입력
