@@ -1,17 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+// App.tsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import StartPage from "./pages/StartPage";
 import UploadStudent from "./pages/UploadStudent";
-import UploadGeneral from "./pages/UploadGeneral";
+import ConfirmStudent from "./pages/ConfirmStudent";
+import RecommendPage from "./pages/RecommendPage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/upload-student" element={<UploadStudent />} />
-        <Route path="/upload-general" element={<UploadGeneral />} />
+        <Route path="/" element={<StartPage />} />
+        <Route path="/upload" element={<UploadStudent />} />
+        <Route path="/confirm" element={<ConfirmStudent />} />
+        <Route path="/recommend" element={<RecommendPage />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

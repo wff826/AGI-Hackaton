@@ -1,0 +1,22 @@
+/* StartPage.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    position: relative;
+  }
+  
+  .content {
+    max-width: 600px;
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 1rem;
+    font-size: 0.8rem;
+    color: #999;
+  }
+  

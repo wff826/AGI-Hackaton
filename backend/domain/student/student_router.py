@@ -39,13 +39,16 @@ async def upload_scholarship(
     student = await create_student(db, enrollment_info, grade_info)
 
     user_session["data"]["student_info"] = {
-        "id": student.id,
-        "name": student.name,
-        "studentid": student.studentid,
-        "major": student.major,
-        "year": student.year,
-        "grade": student.grade
-    }
+    "id": student.id,
+    "name": student.name,
+    "studentid": student.studentid,
+    "major": student.major,
+    "year": student.year,
+    "grade": student.grade,
+    "grade_detail": grade_info_dict 
+}
+
+
     return {
         "message": "Student information uploaded and saved successfully.",
         "student": user_session["data"]["student_info"]
