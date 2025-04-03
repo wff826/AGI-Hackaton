@@ -1,5 +1,6 @@
 // 📄 src/pages/RecommendPage.tsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ 추가
 
 interface Program {
   title: string;
@@ -11,6 +12,7 @@ const RecommendPage = () => {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // ✅ 추가
 
   const handleFetch = async () => {
     setLoading(true);
@@ -53,10 +55,26 @@ const RecommendPage = () => {
           backgroundColor: "#f3f3f3",
           borderRadius: "8px",
           cursor: "pointer",
-          marginBottom: "2rem",
+          marginBottom: "1rem",
         }}
       >
         {loading ? "불러오는 중..." : "장학금 추천 확인하기"}
+      </button>
+
+      {/* ✅ AI 비서 상담 버튼 */}
+      <button
+        onClick={() => navigate("/chatbot")}
+        style={{
+          padding: "0.8rem 2rem",
+          fontSize: "1rem",
+          border: "none",
+          backgroundColor: "#e0f7fa",
+          borderRadius: "8px",
+          cursor: "pointer",
+          marginBottom: "2rem",
+        }}
+      >
+        🤖 AI 비서와 상담하기
       </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
